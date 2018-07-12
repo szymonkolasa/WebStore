@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Administration"];
+}
+
+<div class="d-flex flex-wrap">
+    <div class="col-md-4 px-2 mb-4 category">
+        <a asp-controller="Products" asp-action="Create" class="nav-link pt-0">
+            <div class="text-center bg-light">
+                <div class="p-3 text-dark">
+                    <h5 localize>Add product</h5>
+                </div>
+                <div class="pt-4" style="height: 200px">
+                    <div class="pt-4 text-dark align-middle">
+                        <span class="fa fa-2x fa-plus"></span>
+                        <span class="fa fa-3x fa-archive"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 px-2 mb-4 category">
+        <a asp-controller="Categories" asp-action="Create" class="nav-link pt-0">
+            <div class="text-center bg-light">
+                <div class="p-3 text-dark">
+                    <h5 localize>Add category</h5>
+                </div>
+                <div class="pt-4" style="height: 200px">
+                    <div class="pt-4 text-dark align-middle">
+                        <span class="fa fa-2x fa-plus"></span>
+                        <span class="fa fa-3x fa-tag"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 px-2 mb-4 category">
+        <a asp-controller="Employees" asp-action="Add" class="nav-link pt-0">
+            <div class="text-center bg-light">
+                <div class="p-3 text-dark">
+                    <h5 localize>Add employee</h5>
+                </div>
+                <div class="pt-4" style="height: 200px">
+                    <div class="pt-4 text-dark align-middle">
+                        <span class="fa fa-3x fa-user-plus"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 px-2 mb-4 category">
+        <a asp-controller="Orders" asp-action="Index" class="nav-link pt-0">
+            <div class="text-center bg-light">
+                <div class="p-3 text-dark">
+                    <h5 localize>Orders</h5>
+                </div>
+                <div class="pt-4" style="height: 200px">
+                    <div class="pt-4 text-dark align-middle">
+                        <span class="fa fa-3x fa-th-large"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 px-2 mb-4 category">
+        <a asp-controller="Banners" asp-action="Index" class="nav-link pt-0">
+            <div class="text-center bg-light">
+                <div class="p-3 text-dark">
+                    <h5 localize>Banners</h5>
+                </div>
+                <div class="pt-4" style="height: 200px">
+                    <div class="pt-4 text-dark align-middle">
+                        <span class="fa fa-3x fa-window-maximize"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

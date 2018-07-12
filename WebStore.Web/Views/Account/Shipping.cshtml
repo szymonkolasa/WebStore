@@ -1,0 +1,45 @@
+﻿@using WebStore.Data.Entities
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@model List<ShippingInformation>
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Shipping information"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        @await Html.PartialAsync("_AccountMenu")
+    </div>
+    <div class="col-md-9">
+        <div class="d-flex flex-column flex-md-row align-content-start flex-wrap shipping-cards">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+
+                <div class="card bg-light">
+                    <div class="card-header">@item.Name</div>
+                    <div class="card-body">
+                        @item.FirstName @item.LastName<br />
+                        @item.Street @item.HouseNumber @item.FlatNumber<br />
+                        @item.ZipCode @item.City<br />
+                        @item.Country<br />
+                        @item.PhoneNumber
+                    </div>
+                    <div class="card-footer text-right">
+                        <a asp-controller="Account" asp-action="ShippingInformation" asp-route-id="@item.Id" class="fa fa-lg fa-edit nav-link"></a>
+                        <a asp-controller="Account" asp-action="DeleteShippingInformation" asp-route-id="@item.Id" class="fa fa-lg fa-trash nav-link"></a>
+                    </div>
+                </div>
+            }
+
+            <a asp-controller="Account" asp-action="ShippingInformation" role="button" class="btn btn-outline-dark" style="width: 64px; height: 64px">
+                <i class="fa fa-3x fa-plus m-auto"></i>
+            </a>
+        </div>
+    </div>
+</div>

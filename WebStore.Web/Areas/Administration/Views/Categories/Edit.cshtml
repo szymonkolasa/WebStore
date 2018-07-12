@@ -1,0 +1,86 @@
+﻿@model WebStore.Web.Areas.Administration.ViewModels.Categories.CategoryViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Edit category"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" class="form-control" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div>@Localizer["Current image"]</div>
+                <img width="200" height="200" src="@Url.Action("CategoryImage", new { id = Model.Id })" alt="@Localizer["Current image"]" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryImage" class="control-label"></label> (.png, .jpg)
+                <input asp-for="CategoryImage" class="form-control-file" />
+                <span asp-validation-for="CategoryImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentCategory" class="control-label"></label>
+                <select asp-for="ParentCategory" asp-items="@(new SelectList(ViewData["ParentCategories"] as IEnumerable<string>))" class="form-control">
+                    <option></option>
+                </select>
+                <span asp-validation-for="ParentCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="ShowOnBar" /> @Html.DisplayNameFor(model => model.ShowOnBar)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-outline-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            if ($('#ShowOnBar').val() == true) {
+                $('#ParentCategory').attr('disabled', 'disabled').val('');
+            } 
+
+            if ($('#ParentCategory').val().length > 0) {
+                $('#ShowOnBar').attr('disabled', 'disabled');
+            }
+        })
+
+        $('#ShowOnBar').on('click', function () {
+            var checked = this.checked;
+
+            if (checked) {
+                $('#ParentCategory').attr('disabled', 'disabled').val('');
+            } else {
+                $('#ParentCategory').removeAttr('disabled');
+            }
+        })
+
+        $('#ParentCategory').on('change', function (e) {
+            var index = e.target.selectedIndex;
+
+            if (index > 0) {
+                $('#ShowOnBar').attr('disabled', 'disabled');
+            } else {
+                $('#ShowOnBar').removeAttr('disabled');
+            }
+        });
+    </script>
+}

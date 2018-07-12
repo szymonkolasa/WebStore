@@ -1,0 +1,20 @@
+﻿.bd-sidebar {
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    max-height: calc(-4rem + 100vh);
+}
+
+.btn-link {
+    color: #212529;
+    cursor: pointer;
+}
+
+.nav {
+    li {
+        a {
+            color: #212529;
+            font-size: 1.2rem;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Product>
+
+@if (Model.Count() > 0)
+{
+    <hr />
+    <div class="h3 text-center" localize>Last added</div>
+    <div class="d-flex flex-wrap mt-3">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 col-xl-3 p-2 category">
+                <div class="border border-secondary rounded p-2 h-100">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="nav-link">
+                        <div class="text-center">
+                            <div class="p-3 text-dark">
+                                <h5>@product.Name</h5>
+                            </div>
+                            <div>
+                                <img src="@Url.Action("Thumbnail", "Product", new { id = product.Id })" alt="category image" class="img-fluid mw-250 mh-200" />
+                            </div>
+                            <div class="mt-2">
+                                <h4 class="text-dark">@product.Price.ToString("C")</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}

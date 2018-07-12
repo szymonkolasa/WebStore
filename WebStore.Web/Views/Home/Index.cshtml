@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{ 
+    ViewData["Title"] = Localizer["Home"];
+}
+
+<div>
+    @await Component.InvokeAsync("BannerComponent")
+</div>
+<div>
+    @await Component.InvokeAsync("LastAddedComponent")
+</div>

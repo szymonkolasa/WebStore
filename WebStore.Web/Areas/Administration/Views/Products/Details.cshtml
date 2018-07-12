@@ -1,0 +1,74 @@
+﻿@model WebStore.Web.Areas.Administration.ViewModels.Products.ProductViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="text-right"><a asp-action="Edit" asp-route-id="@Model.Id" class="text-dark nav-link fa fa-2x fa-edit"></a><a asp-action="Delete" asp-route-id="@Model.Id" class="text-dark nav-link fa fa-2x fa-trash"></a></div>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </dt>
+        <dd>
+            <img src="@Url.Action("Thumbnail", new { id = Model.Id })" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductImages)
+        </dt>
+        <dd>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.ProductImages.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img class="d-block w-100" src="@Url.Action("ProductImage", new { Model.ProductImages[i].Id })">
+                        </div>
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="text-dark carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+        <dd>
+            @Html.Raw(Model.ShortDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.Raw(Model.Description)
+        </dd>
+    </dl>
+</div>

@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebStore.Data.Entities
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IViewLocalizer Localizer
+
+<ul class="nav flex-column mt-1">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a asp-controller="Account" asp-action="Index" class="nav-link d-flex">
+                <div class="mt-auto mb-auto fa fa-lg fa-cogs ml-1"></div>
+                <div class="mt-auto mb-auto" localize>My Account</div>
+            </a>
+        </li>
+
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator") || User.IsInRole("Employee"))
+        {
+        <li class="nav-item">
+            <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="nav-link d-flex">
+                <div class="mt-auto mb-auto fa fa-lg fa-lock ml-1"></div>
+                <div class="mt-auto mb-auto" localize>Administration</div>
+            </a>
+        </li>
+        }
+
+        <li class="nav-item">
+            <a asp-controller="Account" asp-action="Logout" class="nav-link d-flex">
+                <div class="mt-auto mb-auto fa fa-lg fa-sign-out ml-1"></div>
+                <div class="mt-auto mb-auto" localize>Sign Out</div>
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-controller="Account" asp-action="Login" asp-route-returnurl="@Context.Request.Path" class="nav-link d-flex">
+                <div class="mt-auto mb-auto fa fa-lg fa-sign-in ml-1"></div>
+                <div class="mt-auto mb-auto" localize>Signin</div>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Account" asp-action="Register" asp-route-returnurl="@Context.Request.Path" class="nav-link d-flex">
+                <div class="mt-auto mb-auto fa fa-lg fa-user-plus ml-1"></div>
+                <div class="mt-auto mb-auto" localize>Create Account</div>
+            </a>
+        </li>
+    }
+</ul>

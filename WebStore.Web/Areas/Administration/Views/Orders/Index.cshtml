@@ -1,0 +1,110 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Order>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WebStore.Data.Entities
+
+@inject IViewLocalizer Localizer
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = Localizer["Orders"];
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<form>
+    <div class="form-group">
+        <label for="filter" localize>Show</label>
+        <select id="filter" name="filter" class="form-control" onchange="this.form.submit()">
+            <option value="New" localize>New orders</option>
+            <option value="All" localize>All orders</option>
+            <option value="My" localize>My orders</option>
+        </select>
+    </div>
+</form>
+
+<table class="table table-responsive-md">
+    <thead>
+        <tr>
+            <th localize>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.IsGift)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsGift)
+                </td>
+                <td>
+                    <a asp-controller="Orders" asp-action="Details" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-info"></a>
+
+                    @if (item.Employee == null)
+                    {
+                        <a asp-controller="Orders" asp-action="Assign" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-user-plus"></a>
+                    }
+
+                    @if (item.Employee == user)
+                    {
+                        <a asp-controller="Orders" asp-action="Edit" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-edit"></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#filter option[value=@ViewData["Filter"]]').attr('selected', 'selected');
+        })
+    </script>
+}

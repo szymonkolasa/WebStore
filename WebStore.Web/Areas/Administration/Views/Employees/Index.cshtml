@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebStore.Data.Entities.ApplicationUser>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WebStore.Data.Entities
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Employees"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="text-right">
+    <a asp-controller="Employees" asp-action="Add" class="nav-link fa fa-2x fa-plus"></a>
+</div>
+
+<table class="table table-responsive-md table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th localize>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @((await UserManager.GetRolesAsync(item)).First())
+                </td>
+                <td>
+                    <a asp-controller="Employees" asp-action="Edit" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-edit"></a>
+                    <a asp-controller="Employees" asp-action="Delete" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-trash"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@model WebStore.Web.Areas.Administration.ViewModels.Products.ProductViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Create"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<form asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ShortDescription" class="control-label"></label>
+        <textarea asp-for="ShortDescription" class="form-control"></textarea>
+        <span asp-validation-for="ShortDescription" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" formnovalidate />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category" class="control-label"></label>
+        <select asp-for="Category" asp-items="@(new SelectList(ViewData["Categories"] as IEnumerable<string>))" class="form-control"></select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Thumbnail" class="control-label"></label> (.png, .jpg)
+        <input asp-for="Thumbnail" class="form-control-file" multiple />
+        <span asp-validation-for="Thumbnail" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Images" class="control-label"></label> (.png, .jpg)
+        <input asp-for="Images" class="form-control-file" multiple />
+        <span asp-validation-for="Images" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="@Localizer["Save"]" class="btn btn-default" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/tinymce/tinymce.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            height: 300,
+            theme: 'modern',
+            plugins: 'print preview searchreplace autolink directionality visualblocks visualchars image link media template table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+            toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+            image_advtab: true,
+            mobile: { theme: 'mobile' }
+        });
+
+        $(document).ready(function () {
+            $('#Price').rules('remove', 'number');
+        });
+    </script>
+}

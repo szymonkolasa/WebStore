@@ -1,0 +1,105 @@
+﻿.sidebar {
+    height: calc(100vh - 56px);
+    width: 0;
+    position: fixed;
+    z-index: 1021;
+    top: 56px;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+
+    a {
+        color: #fff;
+    }
+
+    .fa {
+        width: 30px;
+    }
+}
+
+.sidebar-visible {
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        width: 300px;
+    }
+}
+
+.navbar-dark .navbar-toggler {
+    border: none !important;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.navbar {
+    .fa {
+        color: #fff;
+    }
+
+    .dropdown-menu {
+        border: none;
+    }
+}
+
+form {
+    input[type=submit] {
+        cursor: pointer;
+    }
+}
+
+.collapse-header {
+    a {
+        color: #212529;
+    }
+}
+
+.shipping-cards {
+    .card {
+        margin-bottom: 15px;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            width: 33%;
+            margin-right: 15px;
+        }
+
+        .card-footer a {
+            color: rgb(33, 37, 41);
+        }
+    }
+}
+
+.category {
+    .nav-link {
+        padding: 0.5rem;
+    }
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.carousel-indicators li {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.carousel-indicators .active {
+    background-color: #f00;
+}
+
+.mh-200 {
+    max-height: 200px;
+}
+
+.mw-250 {
+    max-width: 250px;
+}

@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="card bg-light border-light mt-4">
+    <div class="card-header">
+        <span class="h6">Menu</span>
+    </div>
+    <div class="card-body">
+        <ul class="nav flex-column">
+            @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+            {
+                <li class="nav-item"><a asp-controller="Categories" asp-action="Index" class="nav-link" localize>Categories</a></li>
+                <li class="nav-item"><a asp-controller="Products" asp-action="Index" class="nav-link" localize>Products</a></li>
+                <li class="nav-item"><a asp-controller="Employees" asp-action="Index" class="nav-link" localize>Employees</a></li>
+            }
+
+            <li class="nav-item"><a asp-controller="Orders" asp-action="Index" class="nav-link" localize>Orders</a></li>
+            <li class="nav-item"><a asp-controller="Banners" asp-action="Index" class="nav-link" localize>Banners</a></li>
+        </ul>
+    </div>
+</div>

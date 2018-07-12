@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebStore.Web.Models.Cart.CartItem>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Cart"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+@if (Model.Count() > 0)
+{
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="h5"> <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id" class="nav-link text-dark">@item.Product.Name</a></div>
+            <div class="row">
+                <div class="col-md-2">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id" class="nav-link text-dark h4"><img class="img-fluid" width="100" src="@Url.Action("Thumbnail", "Product", new { id = item.Product.Id })" /></a>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="d-inline-flex">
+                            <a asp-controller="Cart" asp-action="Minus" asp-route-id="@item.Product.Id" class="btn btn-outline-dark fa fa-minus my-auto"></a>
+                            <div class="h5 ml-4 mr-4">@item.Quantity</div>
+                            <a asp-controller="Cart" asp-action="Plus" asp-route-id="@item.Product.Id" class="btn btn-outline-dark fa fa-plus my-auto"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="text-center h4">@((item.Product.Price * item.Quantity).ToString("C"))</div>
+                </div>
+                <div class="col-md-1">
+                    <div class="text-center">
+                        <a asp-controller="Cart" asp-action="Delete" asp-route-id="@item.Product.Id" class="nav-link text-dark fa fa-lg fa-trash"></a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+    }
+}
+else
+{
+    <div class="text-center h2 text-secondary">
+        @Localizer["Your shopping cart is empty"]
+    </div>
+    <hr />
+}
+
+<div class="d-md-flex justify-content-between">
+    <div>
+        <a asp-controller="Home" asp-action="Index" class="text-dark nav-link"><span class="fa fa-lg fa-chevron-left"></span><span class="pl-2">@Localizer["To the Shop"]</span></a>
+    </div>
+    @if (Model.Count() > 0)
+    {
+        <div>
+            <div>
+                <span class="h4 mr-3">@Localizer["Total"]</span>
+                <span class="h3 text-info" id="cart-total"></span>
+            </div>
+            <div class="mt-3">
+                <a asp-controller="Cart" asp-action="Order" class="nav-link btn btn-primary">@Localizer["Order"]</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $.ajax({
+            url: '@Url.Action("Total")'
+        }).done(function (data) {
+            $('#cart-total').text(data);
+        });
+    </script>
+}

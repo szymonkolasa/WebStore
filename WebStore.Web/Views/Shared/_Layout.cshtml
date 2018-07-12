@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <title>WebStore - @ViewData["Title"]</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container-fluid justify-content-start">
+            <button class="navbar-toggler pull-left order-1 order-md-1" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Otwórz menu">
+                <span class="fa fa-bars"></span>
+            </button>
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand order-2 order-md-2">WebStore</a>
+            <div class="collapse navbar-collapse order-5 order-md-3" id="menu">
+                @await Component.InvokeAsync("MenuComponent")
+            </div>
+            <div class="ml-auto mr-4 order-3 order-md-4">
+                <a href="javascript:void(0)" onclick="openNav()" class="fa fa-lg fa-user nav-link"></a>
+            </div>
+            <div class="mr-3 order-4 order-md-5">
+                <a asp-controller="Cart" asp-action="Index" class="nav-link">
+                    <div class="row">
+                        <i class="fa fa-lg fa-shopping-bag col-6"></i><span id="cart-badge" class="badge badge-pill badge-secondary col-6 d-none d-md-block"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="sidebar" class="sidebar bg-dark text-light float-right">
+        @Html.Partial("_LoginPartial")
+    </div>
+    
+    <div class="container-fluid">
+        <div class="m-md-4 my-4">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("Count", "Cart")'
+            }).done(function (data) {
+                $('#cart-badge').text(data);
+            })
+        });
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

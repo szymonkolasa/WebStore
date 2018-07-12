@@ -1,0 +1,77 @@
+﻿@model WebStore.Data.Entities.Order
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WebStore.Data
+
+@inject IViewLocalizer Localizer
+@inject ApplicationDbContext DbContext
+
+@{
+    ViewData["Title"] = Localizer["Order summary"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="h4">
+    @Localizer["Order"] @Model.Name
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="h5" localize>Purchaser</div>
+        <div class="h6">
+            <div>@Model.FirstName @Model.LastName</div>
+            <div>@Model.PhoneNumber</div>
+            @if (Model.Purchaser != null)
+            {
+                <div>@Model.Purchaser.Email</div>
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h5" localize>Shipping address</div>
+        <div class="h6">
+            <div>@Model.Street @Model.HouseNumber @Model.FlatNumber</div>
+            <div>@Model.ZipCode @Model.City</div>
+            <div>@Model.Country</div>
+        </div>
+    </div>
+</div>
+<div class="h5" localize>Is a gift?</div>
+<div class="h6" localize>@(Model.IsGift ? "Yes" : "No")</div>
+<div class="h5" localize>Order status</div>
+<div class="h6">@Localizer[$"{Model.Status}"]</div>
+<div class="h3" localize>Ordered items</div>
+@foreach (var item in Model.Items)
+{
+    var product = DbContext.Products.First(x => x.Id == item.ProductId);
+
+    <hr />
+    <div>
+        <div class="h5"> <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="nav-link text-dark">@product.Name</a></div>
+        <div class="row">
+            <div class="col-md-2">
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="nav-link text-dark h4"><img class="img-fluid" width="100" src="@Url.Action("Thumbnail", "Product", new { id = product.Id })" /></a>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    @item.Quantity
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    @item.Price.ToString("C")
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">@((item.Price * item.Quantity).ToString("C"))</div>
+            </div>
+        </div>
+    </div>
+}
+
+<hr />
+<div class="text-right mr-4">
+    <span class="h4 mr-3">@Localizer["Total"]</span>
+    <span class="h3 text-info" id="cart-total">@(Model.Items.Sum(x => x.Price * x.Quantity).ToString("C"))</span>
+</div>

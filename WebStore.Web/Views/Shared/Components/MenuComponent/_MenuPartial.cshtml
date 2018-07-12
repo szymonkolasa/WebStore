@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Category>
+
+@{ 
+    var menuItems = Model.Where(x => x.ParentCategory is null && x.ShowOnBar);
+}
+
+<div class="navbar-nav">
+    @foreach (var item in menuItems)
+    {
+        <a class="nav-link" asp-controller="Category" asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
+    }
+</div>

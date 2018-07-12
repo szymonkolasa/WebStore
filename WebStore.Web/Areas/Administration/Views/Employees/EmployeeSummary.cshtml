@@ -1,0 +1,40 @@
+﻿@model WebStore.Data.Entities.ApplicationUser
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Summary"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="h3">
+    @Html.DisplayNameFor(model => model.Email)
+</div>
+<div class="h5">
+    @Html.DisplayFor(model => model.Email)
+</div>
+<div class="h3" localize>
+    Phone number
+</div>
+<div class="h5">
+    @Html.DisplayFor(model => model.PhoneNumber)
+</div>
+<div class="h3" localize>
+    Password
+</div>
+<div class="h5">
+    @ViewData["EmployeePassword"]
+</div>
+<div class="h3" localize>
+    Role
+</div>
+<div class="h5">
+    @ViewData["Role"]
+</div>
+<div>
+    <a asp-controller="Employees" asp-action="Index" class="btn btn-success" localize>Return to employee list</a>
+    <a asp-controller="Employees" asp-action="Add" class="btn btn-primary" localize>Add new employee</a>
+</div>

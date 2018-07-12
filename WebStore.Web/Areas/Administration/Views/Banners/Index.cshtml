@@ -1,0 +1,56 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Banner>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Banners"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p class="text-right">
+    <a asp-action="Create" class="fa fa-lg fa-plus nav-link"></a>
+</p>
+<table class="table table-responsive-md">
+    <thead>
+        <tr>
+            <th localize>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th localize>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    <a href="@item.Link">Link</a>
+                </td>
+                <td>
+                    <a asp-controller="Banners" asp-action="Edit" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-edit"></a>
+                    <a asp-controller="Banners" asp-action="Delete" asp-route-id="@item.Id" class="nav-link fa fa-lg fa-trash"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

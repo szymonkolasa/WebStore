@@ -1,0 +1,52 @@
+﻿@model WebStore.Web.ViewModels.Account.LoginViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Login"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Login">
+            <input type="hidden" name="ReturnUrl" value="@ViewData["ReturnUrl"]" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Remember" /> @Html.DisplayNameFor(model => model.Remember)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@ViewData["Title"]" class="btn btn-outline-dark" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h4 localize>You don't have an account yet?</h4>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-danger" asp-route-returnurl="@ViewData["ReturnUrl"]" localize>Create an account</a>
+        <h4 localize>What will you gain by creating an account?</h4>
+        <ul>
+            <li localize>Information about the status of your order</li>
+            <li localize>You can always check your orders</li>
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

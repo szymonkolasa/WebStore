@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Product>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Products"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<p class="text-right">
+    <a asp-action="Create" class="fa fa-lg fa-plus nav-link"></a>
+</p>
+<table class="table table-responsive-md">
+    <thead>
+        <tr>
+            <th localize>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th localize>
+                Category
+            </th>
+            <th class="text-center" localize>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td class="text-center">
+                    @item.Price.ToString("C")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="fa fa-lg fa-edit nav-link"></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="fa fa-lg fa-info nav-link"></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="fa fa-lg fa-trash nav-link"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

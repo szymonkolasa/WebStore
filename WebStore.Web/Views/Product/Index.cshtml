@@ -1,0 +1,115 @@
+﻿@model WebStore.Web.ViewModels.Product.ProductViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Model.Category.Name;
+    var filter = ViewData["Filter"];
+}
+
+<div class="text-center">
+    <span class="h2">@ViewData["Title"]</span>
+    @if (Model.Products is null || Model.Products.Count() == 0)
+    {
+        <div class="h3 text-center text-secondary mt-2" localize>No items to show</div>
+    }
+</div>
+
+@if (Model.Products.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-3 col-lg-2 mt-2 mt-md-0">
+            <div class="card bg-light border-white">
+                <div class="card-header">
+                    <div localize>Filters</div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <input type="hidden" name="Id" value="@ViewData["CategoryId"]" />
+                        <div class="form-group">
+                            <label for="Filter" localize>Sort</label>
+                            <select name="Filter" id="filter" class="form-control" onchange="this.form.submit()">
+                                <option value="" localize>Default</option>
+                                <option value="p-asc" localize>Price ascending</option>
+                                <option value="p-desc" localize>Price descending</option>
+                                <option value="n-asc" localize>Name ascending</option>
+                                <option value="n-desc" localize>Name descending</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-lg-10">
+            @foreach (var item in Model.Products)
+            {
+                <hr />
+                <div class="text-left">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="nav-link text-dark h4">@item.Name</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="nav-link text-dark h4 text-center"><img class="img-fluid " src="@Url.Action("Thumbnail", new { id = item.Id })" /></a>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Raw(item.ShortDescription)
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <div>
+                                <span class="h3">@item.Price.ToString("C")</span>
+                            </div>
+                            <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="nav-link btn btn-primary mt-3" localize>Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mt-4">
+        <ul class="pagination justify-content-center">
+            @if (Model.Page > 3)
+            {
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = 1, filter })">1</a></li>
+                <li class="page-item"><a class="page-link active">...</a></li>
+            }
+
+            @if (Model.Page > 2)
+            {
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = (Model.Page - 2), filter })">@(Model.Page - 2)</a></li>
+            }
+
+            @if (Model.Page > 1)
+            {
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = (Model.Page - 1), filter })">@(Model.Page - 1)</a></li>
+            }
+
+            <li class="page-item"><a class="page-link active">@Model.Page</a></li>
+
+            @if ((Model.Pages - Model.Page) >= 1)
+            {
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = (Model.Page + 1), filter })">@(Model.Page + 1)</a></li>
+            }
+
+            @if ((Model.Pages - Model.Page) >= 2)
+            {
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = (Model.Page + 2), filter })">@(Model.Page + 2)</a></li>
+            }
+
+            @if ((Model.Pages - Model.Page) >= 3)
+            {
+                <li class="page-item"><a class="page-link active">...</a></li>
+                <li class="page-item"><a class="page-link active" href="@Url.Action("Index", new { id = Model.Category.Id, page = Model.Pages, filter })">@Model.Pages</a></li>
+            }
+        </ul>
+    </div>
+
+    @section Scripts {
+        <script>
+        $(document).ready(function () {
+            $('#filter option[value=@ViewData["Filter"]]').attr('selected', 'selected');
+        })
+        </script>
+    }
+}

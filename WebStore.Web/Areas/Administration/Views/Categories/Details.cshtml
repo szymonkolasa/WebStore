@@ -1,0 +1,47 @@
+﻿@model WebStore.Web.Areas.Administration.ViewModels.Categories.CategoryViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Details"];
+}
+
+<h2><a asp-action="Index" class="text-dark nav-link fa fa-chevron-left"></a>@Model.Name</h2>
+<hr />
+
+<div>
+    <div class="text-right"><a asp-action="Edit" asp-route-id="@Model.Id" class="text-dark nav-link fa fa-2x fa-edit"></a><a asp-action="Delete" asp-route-id="@Model.Id" class="text-dark nav-link fa fa-2x fa-trash"></a></div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentCategory)
+        </dt>
+        <dd>
+            @if (string.IsNullOrEmpty(Model.ParentCategory))
+            {
+                @Localizer["None"]
+            }
+            else
+            {
+                @Model.ParentCategory
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShowOnBar)
+        </dt>
+        <dd>
+            @if (Model.ShowOnBar)
+            {
+                @Localizer["Yes"]
+            }
+            else
+            {
+                @Localizer["No"]
+            }
+        </dd>
+        <dt>@Localizer["Category image"]</dt>
+        <dd>
+            <img src="@Url.Action("CategoryImage", new { id = Model.Id })" width="200" height="200" />
+        </dd>
+    </dl>
+</div>

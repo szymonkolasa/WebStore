@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebStore.Data.Entities.Order>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Orders"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_AccountMenu")
+    </div>
+    <div class="col-md-9">
+        <table class="table table-responsive-xl table-hover table-striped">
+            <thead>
+                <tr>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.CreationDate)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.Street)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.HouseNumber)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.FlatNumber)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.ZipCode)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.IsGift)
+                    </th>
+                    <th localize>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Street)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HouseNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FlatNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ZipCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsGift)
+                        </td>
+                        <td localize>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@item.Id" class="text-dark nav-link fa fa-lg fa-info"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
